@@ -1,0 +1,3 @@
+# Local Netlify folder
+.netlify
+printf ".env*\nnode_modules/\ndist/\n" > .gitignore

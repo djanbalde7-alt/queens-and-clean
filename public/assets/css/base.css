@@ -1,0 +1,38 @@
+/* Reset light */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+img { max-width: 100%; height: auto; display: block; }
+
+/* Tokens */
+:root{
+  --bg:#FFFFFF;
+  --bg-alt:#F7F7F8;
+  --text:#111111;            /* AAA on white */
+  --muted:#4B4F58;
+  --line:#EFEFF1;
+
+  --brand-blue:#0A2342;      /* header/footer */
+  --cta:#FF8A38;             /* orange doux */
+  --cta-text:#111111;        /* AAA on orange */
+
+  --radius:14px;
+  --space-1:8px;
+  --space-2:12px;
+  --space-3:16px;
+  --space-4:24px;
+  --space-5:32px;
+
+  --container:720px;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font:16px/1.55 Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+.h1{ font:700 28px/1.2 Montserrat, Inter, Arial; margin: 0 0 var(--space-3); }
+.section-title{ font:700 22px/1.3 Montserrat, Inter, Arial; margin: 0 0 var(--space-3); }
+p{ margin: 0 0 var(--space-3); color: var(--text); }
+small{ color:var(--muted); }
+
+a{ color:inherit; text-decoration:none; }

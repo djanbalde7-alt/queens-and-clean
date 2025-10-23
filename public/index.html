@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Queens & Clean – The Art of Calm Perfection</title>
+  <link rel="preload" as="image" href="/assets/img/hero-mobile@1x1.webp" />
+  <link rel="stylesheet" href="/assets/css/base.css" />
+  <link rel="stylesheet" href="/assets/css/layout.css" />
+  <link rel="stylesheet" href="/assets/css/components.css" />
+</head>
+<body>
+  <!-- Header minimal -->
+  <header class="site-header">
+    <div class="container">
+      <div class="brand">Queens & Clean</div>
+    </div>
+  </header>
+
+  <!-- Sticky CTA -->
+  <div class="sticky-cta">
+    <a href="#lead-form" class="btn cta">Book Your Clean</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="h1">The Art of Calm Perfection in Your Home</h1>
+      <ul class="proofs">
+        <li>Premium eco products</li>
+        <li>Family & pet safe</li>
+        <li>Queens’ finest cleaners</li>
+      </ul>
+      <a class="btn cta" href="#lead-form">Book Your Clean</a>
+
+      <div class="hero-image">
+        <img
+          src="/assets/img/hero-mobile@1x1.webp"
+          srcset="/assets/img/hero-mobile@1x1.webp 800w, /assets/img/hero-tablet@1x1.webp 1200w"
+          sizes="(max-width: 768px) 100vw, 1200px"
+          alt="Luxury clean bathroom in Queens"
+          loading="eager"
+          decoding="async"
+          width="1200" height="1200"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="section alt">
+    <div class="container">
+      <h2 class="section-title">Why People Choose Queens & Clean</h2>
+      <div class="benefits">
+        <div class="benefit">
+          <h3>Impeccable Results</h3>
+          <p>We combine premium eco products and precise methods for a calm, pristine home.</p>
+        </div>
+        <div class="benefit">
+          <h3>Flexible Scheduling</h3>
+          <p>Morning, afternoon, or evening—pick a time that fits your routine.</p>
+        </div>
+        <div class="benefit">
+          <h3>Trusted & Insured</h3>
+          <p>Professional standards and consistent quality across Queens neighborhoods.</p>
+        </div>
+      </div>
+      <a class="btn cta" href="#lead-form">Book Your Clean</a>
+    </div>
+  </section>
+
+  <!-- Form -->
+  <section class="section" id="lead-form">
+    <div class="container">
+      <h2 class="section-title">Get Your Personalized Quote</h2>
+      <form class="form" id="quote-form" novalidate>
+        <div class="field">
+          <label for="fullname">Full Name</label>
+          <input id="fullname" name="fullname" type="text" placeholder="John Doe" required />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required />
+        </div>
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel" inputmode="tel" placeholder="+1 917 555 2103" required />
+        </div>
+        <div class="field">
+          <label for="service_address">Service Address</label>
+          <input id="service_address" name="service_address" type="text" placeholder="42-11 28th Ave, Astoria" required />
+        </div>
+
+        <div class="field">
+          <label for="service_type">Service Type</label>
+          <select id="service_type" name="service_type" required>
+            <option value="">Choisir…</option>
+            <option value="standard">Standard</option>
+            <option value="deep">Deep Cleaning</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="number_of_bedrooms">Number of Bedrooms</label>
+          <select id="number_of_bedrooms" name="number_of_bedrooms" required>
+            <option value="">Choisir…</option>
+            <option value="studio">Studio</option>
+            <option value="p_1br">1BR</option>
+            <option value="p_2br">2BR</option>
+            <option value="p_3br">3BR</option>
+            <option value="p_4br">4BR</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="preferred_date">Preferred Date</label>
+          <input id="preferred_date" name="preferred_date" type="date" required />
+        </div>
+
+        <div class="field">
+          <label for="time_slot">Time Slot</label>
+          <select id="time_slot" name="time_slot" required>
+            <option value="">Choisir…</option>
+            <option value="morning">Morning</option>
+            <option value="afternoon">Afternoon</option>
+            <option value="evening">Evening</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="special_instructions">Special Instructions (optional)</label>
+          <textarea id="special_instructions" name="special_instructions" rows="3" placeholder="Pets, parking, access code…"></textarea>
+        </div>
+
+        <button type="submit" class="btn cta">Request My Quote</button>
+
+        <!-- Mini-FAQ accordéon -->
+        <section class="mini-faq" aria-label="Frequently Asked Questions">
+          <details class="faq-item">
+            <summary><span class="faq-q">What’s included?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+            <div class="faq-a">Standard: kitchen, bathroom, floors, dusting, trash. Deep: plus baseboards, grout edges, tops, appliances, detailed corners.</div>
+          </details>
+          <details class="faq-item">
+            <summary><span class="faq-q">How do I pay?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+            <div class="faq-a">Secure card payment after acceptance. Receipt by email.</div>
+          </details>
+          <details class="faq-item">
+            <summary><span class="faq-q">Can I cancel?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+            <div class="faq-a">Free up to 24h before. Under 24h: minimum fee (details in confirmation email).</div>
+          </details>
+        </section>
+      </form>
+
+      <!-- Toast succès (message seul) -->
+      <div id="toast" role="status" aria-live="polite" class="toast" hidden>
+        Request received ✅ — You’ll get your quote shortly.
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing (table simple) -->
+  <section class="section alt">
+    <div class="container">
+      <h2 class="section-title">Transparent Pricing, Premium Results</h2>
+      <div class="perks">
+        <div class="perk"><h3>Flat-rate clarity</h3><p>No surprises: total includes taxes.</p></div>
+        <div class="perk"><h3>Premium eco products</h3><p>Safe for families & pets.</p></div>
+        <div class="perk"><h3>Reliable schedule</h3><p>Morning / Afternoon / Evening.</p></div>
+      </div>
+      <div class="pricing-table">
+        <div class="row head">
+          <div>Home Type</div><div>Standard</div><div>Deep</div>
+        </div>
+        <div class="row"><div>Studio</div><div>From $110</div><div>From $150</div></div>
+        <div class="row"><div>1BR</div><div>From $130</div><div>From $180</div></div>
+        <div class="row"><div>2BR</div><div>From $150</div><div>From $210</div></div>
+        <div class="row"><div>3–4BR</div><div>From $170</div><div>From $240</div></div>
+      </div>
+      <a class="btn cta" href="#lead-form">Book Your Clean</a>
+    </div>
+  </section>
+
+  <!-- Social Proof (placeholder, à compléter plus tard) -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Loved by Busy Couples & Families</h2>
+      <p>Reviews will appear here soon.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <small>© Queens & Clean · Privacy · Legal · Accessibility</small>
+    </div>
+  </footer>
+
+  <script src="/assets/js/main.js" defer></script>
+  <script src="/assets/js/form.js" defer></script>
+</body>
+</html>

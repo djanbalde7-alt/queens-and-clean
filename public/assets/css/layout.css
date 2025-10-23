@@ -1,0 +1,45 @@
+.container{
+  max-width: var(--container);
+  margin-inline:auto;
+  padding-inline: 16px;
+}
+@media (min-width: 768px){
+  .container{ padding-inline: 24px; }
+}
+
+.site-header, .site-footer{
+  background: var(--brand-blue);
+  color: #fff;
+}
+.site-header .container, .site-footer .container{
+  padding-block: var(--space-3);
+}
+.brand{ font:700 18px/1 Montserrat, Inter, Arial; }
+
+.section{ padding-block: var(--space-5); }
+.section.alt{ background: var(--bg-alt); }
+
+.hero .proofs{
+  list-style:none; padding:0; margin: 0 0 var(--space-3);
+  display:grid; gap: var(--space-1);
+}
+.hero .hero-image{ margin-top: var(--space-3); }
+
+.benefits, .perks{
+  display:grid; gap: var(--space-3);
+}
+@media (min-width: 768px){
+  .benefits, .perks{ grid-template-columns: 1fr 1fr 1fr; }
+}
+
+.pricing-table{
+  display:grid; gap:2px; background:var(--line); border-radius:var(--radius);
+  overflow:hidden; margin-block: var(--space-3);
+}
+.pricing-table .row{ display:grid; grid-template-columns: 2fr 1fr 1fr; background:#fff; padding:12px; }
+.pricing-table .row.head{ background:#fafafa; font-weight:700; }
+
+.sticky-cta{
+  position: sticky; bottom: 0; background: #fff; border-top:1px solid var(--line);
+  padding: var(--space-3); display:flex; justify-content:center;
+}

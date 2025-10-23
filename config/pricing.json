@@ -1,0 +1,5 @@
+{
+  "currency": "USD",
+  "standard": { "studio": 119, "p_1br": 149, "p_2br": 179, "p_3br": 209, "p_4br": 239 },
+  "deep":     { "studio": 149, "p_1br": 179, "p_2br": 209, "p_3br": 239, "p_4br": 269 }
+}

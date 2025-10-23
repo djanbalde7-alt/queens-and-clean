@@ -1,0 +1,16 @@
+{
+  "name": "queens-and-clean",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'Static site — nothing to build'",
+    "start": "netlify dev"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.0",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {}
+}
