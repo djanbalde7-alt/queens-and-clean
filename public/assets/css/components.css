@@ -149,3 +149,68 @@ select:invalid, option[value=""]{ color: var(--muted); }
     margin-bottom: 36px;
   }
 }
+
+
+
+
+
+
+/* === Vertical Rhythm: components === */
+
+/* Titres locaux dans les sections */
+.section h2, .section h3 {
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-4);
+}
+
+/* Listes */
+.section ul, .section ol {
+  margin: 0 0 var(--space-5);
+  padding-left: 1.25rem;
+}
+.section li + li { margin-top: var(--space-2); }
+
+/* Mini FAQ (accordéon) : aération */
+.mini-faq { margin-top: var(--space-6); }
+.faq-item { padding: var(--space-4) 0; }
+.faq-item + .faq-item { border-top: 1px solid var(--line); }
+
+/* Tableau des tarifs : marges cohérentes */
+.pricing-table {
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+/* Avis (reviews) : cartes et grille */
+.reviews-grid {
+  display: grid;
+  gap: var(--space-6);
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-7);
+}
+.review-card {
+  padding: var(--space-6);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.06);
+}
+.review-head { margin-bottom: var(--space-3); }
+
+/* CTA : largeur uniforme (déjà mise), respiration autour */
+.btn.cta,
+.cta-button {
+  width: 100%;
+  max-width: 640px;
+}
+
+/* wrapper ajouté précédemment pour l’air autour des CTA */
+.cta-wrapper {
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+/* Équilibre sous le formulaire avant la FAQ */
+#quote-form + .mini-faq { margin-top: var(--space-8); }
+
+/* Petites respirations supplémentaires pour paragraphes courts */
+.section p + .cta-wrapper { margin-top: var(--space-6); }

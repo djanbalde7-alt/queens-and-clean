@@ -70,3 +70,34 @@ footer {
   padding-bottom: 40px;
 }
 
+
+/* === Vertical Rhythm: layout === */
+
+/* Conteneur et sections */
+.section {
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-8);
+}
+
+.section.alt {                 /* blocs gris pâle */
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-8);
+}
+
+/* Écart interne des containers si nécessaire */
+.container > * + * {
+  margin-top: var(--space-6);  /* tout élément après un autre prend un écart */
+}
+
+/* Espacement avant/après les grands titres de section */
+.section-title {
+  margin-top: 0;
+  margin-bottom: var(--space-5);
+}
+
+/* Responsive : un peu plus d’air sur tablette+ */
+@media (min-width: 768px) {
+  .section { padding-top: var(--space-9); padding-bottom: var(--space-9); }
+  .container > * + * { margin-top: var(--space-7); }
+}
+
