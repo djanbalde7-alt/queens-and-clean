@@ -214,3 +214,39 @@ select:invalid, option[value=""]{ color: var(--muted); }
 
 /* Petites respirations supplémentaires pour paragraphes courts */
 .section p + .cta-wrapper { margin-top: var(--space-6); }
+
+
+
+
+/* --- Perks sous "Tarifs clairs et transparents" --- */
+.perks{
+  /* même respiration que le hero */
+  margin: var(--space-4) 0 var(--space-6);
+  padding-left: 10px;             /* léger décalage à droite */
+  display: grid;                  /* pile proprement les lignes */
+  gap: 10px;                      /* espace identique entre lignes */
+}
+
+.perk{
+  display: flex;                  /* aligne l’icône et le texte sur la même ligne */
+  align-items: center;
+  gap: 10px;                      /* espace icône/texte */
+  color: var(--text);             /* couleur identique au texte */
+}
+
+.perk p{
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Icône "check" fin, couleur = currentColor (donc identique au texte) */
+.perk::before{
+  content: "";
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  background-color: currentColor;
+  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8.5 6.5 12 13 4"/></svg>') center / contain no-repeat;
+  mask:         url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8.5 6.5 12 13 4"/></svg>') center / contain no-repeat;
+}
