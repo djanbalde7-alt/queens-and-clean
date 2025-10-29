@@ -43,3 +43,30 @@
   position: sticky; bottom: 0; background: #fff; border-top:1px solid var(--line);
   padding: var(--space-3); display:flex; justify-content:center;
 }
+
+/* --- Global Section Spacing --- */
+.section {
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+/* Ajustement pour les écrans mobiles */
+@media (max-width: 768px) {
+  .section {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+}
+
+/* --- Harmonisation entre sections --- */
+section + section {
+  margin-top: 40px;
+}
+
+/* --- Footer spacing --- */
+footer {
+  margin-top: 60px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
