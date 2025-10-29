@@ -186,3 +186,31 @@ footer {
   /* ne pas mettre max-width / width:auto ici */
 }
 
+
+
+/* --- Liste de preuves (hero) --- */
+.proofs {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-4) 0 var(--space-6);
+}
+
+.proofs li {
+  position: relative;
+  padding-left: 28px;            /* espace à gauche pour l’icône */
+  margin-bottom: 10px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text);            /* même couleur que ton texte */
+}
+
+.proofs li::before {
+  content: "✔";                  /* symbole check élégant */
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 1.1rem;
+  color: currentColor;           /* prend la couleur du texte */
+  line-height: 1;                /* alignement vertical parfait */
+}
+
