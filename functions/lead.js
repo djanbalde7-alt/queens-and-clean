@@ -1,10 +1,13 @@
 // functions/lead.js
+
+// ----- Imports (ESM) -----
 import fetch from 'node-fetch';
 import { quoteEngine } from '../services/quoteEngine.js';
-import { sendQuoteEmail } from './lib/sendgrid.js';
-import { signAcceptToken } from './lib/token.js';
+import { sendQuoteEmail } from '../lib/sendgrid.js';
+import { signAcceptToken } from '../lib/token.js';
 
-const HS_BASE  = process.env.HUBSPOT_API_URL || 'https://api.hubapi.com';
+// ----- Env & bases -----
+const HS_BASE = process.env.HUBSPOT_API_URL || 'https://api.hubapi.com';
 const HS_TOKEN = process.env.HUBSPOT_PRIVATE_APP_TOKEN;
 const ACCEPT_SECRET = process.env.ACCEPT_TOKEN_SECRET || 'dev_secret';
 
@@ -13,10 +16,11 @@ const headersHS = {
   'Content-Type': 'application/json'
 };
 
-const badReq = (msg) => ({ statusCode: 400, body: JSON.stringify({ ok:false, error: msg }) });
-const ok     = (obj={}) => ({ statusCode: 200, body: JSON.stringify({ ok:true, ...obj }) });
+// ----- Utils réponse -----
+const badReq = (msg = '') => ({ statusCode: 400, body: JSON.stringify({ ok: false, error: msg }) });
+const ok     = (obj = {}) => ({ statusCode: 200, body: JSON.stringify({ ok: true, ...obj }) });
 
-/* ---------------- HubSpot helpers (robuste) ---------------- */
+/* ---------------- HubSpot helpers ---------------- */
 
 // 1) Chercher un contact par email
 async function findContactByEmail(email) {
@@ -46,7 +50,7 @@ async function createContact({ email, firstname, lastname, phone }) {
   });
   const j = await res.json();
   if (!res.ok) throw new Error(`hubspot create contact: ${res.status} ${j.message || ''}`);
-  return { id: j.id };
+  return { id: j.id || j?.id };
 }
 
 // 3) Mettre à jour un contact
@@ -61,7 +65,7 @@ async function updateContact(contactId, { email, firstname, lastname, phone }) {
   return { id: j.id || contactId };
 }
 
-// 4) Upsert contact (cherche → patch sinon create)
+// 4) Upsert contact
 async function upsertContact({ email, firstname, lastname, phone }) {
   const existing = await findContactByEmail(email);
   if (existing?.id) {
@@ -82,17 +86,18 @@ async function createDeal(props) {
   return { id: j.id };
 }
 
-// 6) Associer deal → contact
+// 6) Associer deal <> contact
 async function associateDealToContact(dealId, contactId) {
   const res = await fetch(`${HS_BASE}/crm/v4/objects/deals/${dealId}/associations/contacts/${contactId}`, {
     method: 'PUT',
     headers: headersHS,
-    body: JSON.stringify([{ associationCategory: 'HUBSPOT_DEFINED', associationTypeId: 3 }]) // Deal→Contact
+    body: JSON.stringify({
+      associationCategory: 'HUBSPOT_DEFINED',
+      associationTypeId: 3 // Deal->Contact
+    })
   });
-  if (!res.ok) {
-    const j = await res.json().catch(()=>({}));
-    throw new Error(`hubspot assoc: ${res.status} ${j.message || ''}`);
-  }
+  const j = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(`hubspot assoc: ${res.status} ${j.message || ''}`);
 }
 
 // 7) Mettre à jour le stage d’un deal
@@ -106,22 +111,22 @@ async function updateDealStage(dealId, pipelineId, stageId) {
   if (!res.ok) throw new Error(`hubspot stage: ${res.status} ${j.message || ''}`);
 }
 
-/* ---------------- Validation & utils ---------------- */
+/* --------------- Validation & utils --------------- */
 
+// ⚠️ On ne valide plus time_slot : on le retire du whitelist
 const whitelist = {
-  service_type: ['standard','deep'],
-  number_of_bedrooms: ['studio','p_1br','p_2br','p_3br','p_4br'],
-  time_slot: ['morning','afternoon','evening']
+  service_type: ['standard', 'deep'],
+  number_of_bedrooms: ['studio', 'p_1br', 'p_2br', 'p_3br', 'p_4br']
 };
 
 function splitName(fullname) {
-  const parts = String(fullname||'').trim().split(/\s+/);
+  const parts = String(fullname || '').trim().split(/\s+/);
   const firstname = parts.shift() || '';
-  const lastname  = parts.join(' ') || '-';
+  const lastname  = parts.join(' ') || '';
   return { firstname, lastname };
 }
 
-/* ---------------- Handler ---------------- */
+/* -------------------- Handler -------------------- */
 
 export const handler = async (event) => {
   if (event.httpMethod !== 'POST') return badReq('POST only');
@@ -129,11 +134,18 @@ export const handler = async (event) => {
   try {
     const body = JSON.parse(event.body || '{}');
 
-    const req = ['fullname','email','phone','service_address','service_type','number_of_bedrooms','preferred_date','time_slot'];
+    // Champs requis (sans time_slot ni special_instructions)
+    const req = ['fullname','email','phone','service_address','service_type','number_of_bedrooms','preferred_date'];
     for (const k of req) if (!body[k]) return badReq(`Missing: ${k}`);
-    if (!whitelist.service_type.includes(body.service_type)) return badReq('Invalid service_type');
-    if (!whitelist.number_of_bedrooms.includes(body.number_of_bedrooms)) return badReq('Invalid number_of_bedrooms');
-    if (!whitelist.time_slot.includes(body.time_slot)) return badReq('Invalid time_slot');
+
+    // Validations simples
+    if (!whitelist.service_type.includes(body.service_type)) {
+      return badReq('Invalid service_type');
+    }
+    if (!whitelist.number_of_bedrooms.includes(body.number_of_bedrooms)) {
+      return badReq('Invalid number_of_bedrooms');
+    }
+    // ⛔️ plus de validation time_slot ici
 
     // 1) Calcul du devis
     const { amount, currency } = quoteEngine({
@@ -141,23 +153,24 @@ export const handler = async (event) => {
       number_of_bedrooms: body.number_of_bedrooms
     });
 
-    // 2) Contact (upsert) + deal + association
+    // 2) Contact (upsert) + Deal + association
     const { firstname, lastname } = splitName(body.fullname);
     const contact = await upsertContact({ email: body.email, firstname, lastname, phone: body.phone });
 
+    // Propriétés deal : on retire time_slot & special_instructions
     const dealProps = {
-      dealname: `Quote ${firstname} ${lastname} – ${body.service_type}`,
-      amount: amount,
-      deal_amount: amount, // ta propriété personnalisée si tu l'utilises
+      dealname: `Quote ${firstname} ${lastname} - ${body.service_type}`,
+      amount: amount,           // si tu as une propriété personnalisée, remplace ici
       pipeline: process.env.HUBSPOT_PIPELINE_ID,
       dealstage: process.env.HUBSPOT_STAGE_QUOTE_SENT,
       service_address: body.service_address,
       service_type: body.service_type,
       number_of_bedrooms: body.number_of_bedrooms,
-      preferred_date: body.preferred_date,
-      time_slot: body.time_slot,
-      special_instructions: body.special_instructions || ''
+      preferred_date: body.preferred_date
+      // time_slot: supprimé
+      // special_instructions: supprimé
     };
+
     const deal = await createDeal(dealProps);
     await associateDealToContact(deal.id, contact.id);
 
@@ -165,9 +178,11 @@ export const handler = async (event) => {
     await updateDealStage(deal.id, process.env.HUBSPOT_PIPELINE_ID, process.env.HUBSPOT_STAGE_QUOTE_SENT);
 
     // 3) Email SendGrid (token signé)
-    const currencySign = (currency || 'USD') === 'USD' ? '$' : (currency === 'EUR' ? '€' : currency + ' ');
+    const currencySign = (currency === 'USD') ? '$' : (currency === 'EUR' ? '€' : currency);
     const total_formatted = `${currencySign}${amount.toFixed(2)}`;
-    const date_label = body.preferred_date + (body.time_slot ? ` (${body.time_slot})` : '');
+
+    // 👉 La date affichée dans l'email : seulement la date, plus de créneau
+    const date_label = body.preferred_date;
 
     const base = process.env.SENDGRID_ACCEPT_URL_BASE || `${process.env.SITE_URL || 'http://localhost:8888'}/api/accept`;
     const token = signAcceptToken({ dealId: deal.id, ttlSec: 60 * 60 * 12 }, ACCEPT_SECRET); // 12h
@@ -178,7 +193,7 @@ export const handler = async (event) => {
       templateData: {
         full_name: `${firstname} ${lastname}`,
         service_type: body.service_type,
-        bedrooms: body.number_of_bedrooms.replace('p_','').toUpperCase(),
+        bedrooms: body.number_of_bedrooms.replace('p_', '').toUpperCase(),
         address: body.service_address,
         date_label,
         total_formatted,
@@ -189,8 +204,7 @@ export const handler = async (event) => {
     return ok({ dealId: deal.id, contactId: contact.id });
 
   } catch (err) {
-    // <-- IMPORTANT : toujours renvoyer du JSON côté API
     console.error('[lead] error:', err);
-    return { statusCode: 500, body: JSON.stringify({ ok:false, error: String(err.message || err) }) };
+    return { statusCode: 500, body: JSON.stringify({ ok: false, error: String(err.message || err) }) };
   }
 };
