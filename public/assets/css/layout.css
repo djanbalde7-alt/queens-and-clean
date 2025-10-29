@@ -153,3 +153,36 @@ footer {
   .hero p { font-size: 1.1rem; }
 }
 
+
+/* Header : léger resserrage vertical */
+.site-header {
+  text-align: center;
+  padding-top: var(--space-3);
+  padding-bottom: var(--space-3);
+}
+
+/* Hero : aligné à gauche + espace réduit au-dessus du H1 */
+.hero {
+  text-align: left;             /* aligne h1, texte et CTA à gauche */
+  padding-top: var(--space-5);  /* ↓ était plus grand : réduit l’espace sous le header */
+  padding-bottom: var(--space-8);
+}
+
+.hero h1 {
+  margin-top: var(--space-3);   /* ↓ rapproche le h1 du header */
+  margin-bottom: var(--space-4);
+  line-height: 1.25;
+}
+
+.hero p {
+  margin-bottom: var(--space-5);
+  line-height: 1.6;
+}
+
+/* IMPORTANT : on laisse le CTA comme avant (plein largeur) */
+.hero .btn.cta {
+  display: block;
+  width: 100%;
+  /* ne pas mettre max-width / width:auto ici */
+}
+
