@@ -214,3 +214,34 @@ footer {
   line-height: 1;                /* alignement vertical parfait */
 }
 
+
+/* --- Liste de preuves (hero) avec check fin et alignement parfait --- */
+.proofs {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-4) 0 var(--space-6);
+  margin-left: 10px; /* léger décalage à droite */
+}
+
+.proofs li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* --- Check fin et sobre (SVG intégré en ligne) --- */
+.proofs li::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  background-color: currentColor; /* prend la couleur du texte */
+  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8.5 6.5 12 13 4"/></svg>') center / contain no-repeat;
+  mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8.5 6.5 12 13 4"/></svg>') center / contain no-repeat;
+}
+
