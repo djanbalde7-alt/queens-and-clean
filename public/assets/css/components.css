@@ -1,9 +1,46 @@
-.btn{
+/*.btn{
   display:inline-block; background: var(--cta); color: var(--cta-text);
   border-radius: 10px; padding: 12px 18px; font-weight: 700;
   outline-offset: 2px;
 }
-.btn:focus-visible{ outline: 2px solid var(--brand-blue); }
+.btn:focus-visible{ outline: 2px solid var(--brand-blue); }*/
+
+/* --- Bouton générique + variante CTA uniformisés --- */
+.btn{
+  display:block;                 /* plein bloc */
+  width:100%;                    /* pleine largeur */
+  text-align:center;
+  background: var(--cta);
+  color: var(--cta-text);
+  font-weight:700;
+  font-size:16px;
+  padding:16px 20px;             /* hauteur cohérente partout */
+  border-radius:12px;
+  outline-offset:2px;
+}
+
+.btn:focus-visible{ outline:2px solid var(--brand-blue); }
+
+/* utilitaire si tu veux un CTA pas pleine largeur dans le futur */
+.btn--auto{ width:auto; display:inline-block; }
+
+/* petit wrapper pour l’espacement vertical autour des CTA */
+.cta-wrapper{ margin:24px 0; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .form{ display:grid; gap: var(--space-3); }
 .field{ display:grid; gap: 6px; }
