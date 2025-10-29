@@ -31,17 +31,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 .form{ display:grid; gap: var(--space-3); }
 .field{ display:grid; gap: 6px; }
 input, select, textarea{
@@ -143,4 +132,20 @@ select:invalid, option[value=""]{ color: var(--muted); }
 
 .cta-button:hover {
   background: #e86f1e;
+}
+
+
+
+
+/* --- Espacement respirant autour des CTA --- */
+.cta-wrapper {
+  margin-top: 32px;   /* espace au-dessus du bouton */
+  margin-bottom: 48px; /* espace en dessous du bouton */
+}
+
+@media (max-width: 480px) {
+  .cta-wrapper {
+    margin-top: 24px;
+    margin-bottom: 36px;
+  }
 }
