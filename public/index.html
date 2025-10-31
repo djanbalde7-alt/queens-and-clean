@@ -9,6 +9,137 @@
   <link rel="stylesheet" href="/assets/css/layout.css" />
   <link rel="stylesheet" href="/assets/css/components.css" />
 </head>
+
+
+
+<!-- Cookie Consent (English, animated, with safe init + reset helper) -->
+<style>
+  :root {
+    --cookie-bg:#fff; --cookie-text:#333; --cookie-border:#e5e5e5;
+    --cookie-shadow:0 8px 24px rgba(0,0,0,.12);
+    --cookie-cta: var(--cta, #ff7a1a); --cookie-cta-text:#fff;
+  }
+  #cookie-banner, #cookie-min { position:fixed; left:50%; transform:translateX(-50%); z-index:1000; }
+  #cookie-banner{
+    bottom:20px; max-width:360px; width:calc(100% - 24px);
+    background:var(--cookie-bg); color:var(--cookie-text);
+    border:1px solid var(--cookie-border); border-radius:12px; box-shadow:var(--cookie-shadow);
+    padding:14px 16px; font-size:13px; line-height:1.5; text-align:left;
+    opacity:0; transform:translate(-50%, 12px); pointer-events:none;
+    transition:opacity .35s ease, transform .35s ease;
+  }
+  #cookie-banner.show{ opacity:1; transform:translate(-50%, 0); pointer-events:auto; }
+  #cookie-banner .cookie-row{ display:flex; gap:10px; justify-content:flex-end; margin-top:10px; }
+  #cookie-banner .cookie-link{ color:#0066cc; text-decoration:underline; text-underline-offset:3px; }
+  #cookie-banner .btn{ appearance:none; border-radius:8px; padding:6px 12px; cursor:pointer; font-weight:600; border:1px solid transparent; }
+  #cookie-banner .btn-accept{ background:var(--cookie-cta); color:var(--cookie-cta-text); }
+  #cookie-banner .btn-decline{ background:#fff; color:#555; border-color:var(--cookie-border); }
+  #cookie-banner .btn:focus-visible{ outline:2px solid var(--brand-blue, #0b5fff); outline-offset:2px; }
+
+  #cookie-min{
+    bottom:16px; background:#fff; border:1px solid var(--cookie-border); border-radius:999px;
+    box-shadow:var(--cookie-shadow); padding:8px 12px; font-size:13px; color:var(--cookie-text);
+    display:none; align-items:center; gap:8px;
+  }
+  #cookie-min .dot{ width:8px; height:8px; border-radius:50%; background:var(--cookie-cta); }
+  #cookie-min button{ background:transparent; border:none; padding:0; font-weight:600; cursor:pointer; }
+
+  @media (prefers-reduced-motion: reduce){ #cookie-banner{ transition:none; } }
+</style>
+
+<div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+  <p style="margin:0 0 8px 0;">
+    We use cookies to improve your browsing experience and analyze site traffic.
+    <a class="cookie-link" href="/privacy.html">Learn more</a>.
+  </p>
+  <div class="cookie-row">
+    <button id="cookie-decline" class="btn btn-decline" type="button">Decline</button>
+    <button id="cookie-accept" class="btn btn-accept" type="button">Accept</button>
+  </div>
+</div>
+
+<div id="cookie-min" aria-live="polite" aria-label="Minimized cookie banner">
+  <span class="dot" aria-hidden="true"></span>
+  <button type="button" id="cookie-reopen">Cookies</button>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    const LS_KEY = 'cookies-consent'; // 'accepted' | 'declined' | 'dismissed'
+    const banner = document.getElementById('cookie-banner');
+    const pill   = document.getElementById('cookie-min');
+    const btnAccept  = document.getElementById('cookie-accept');
+    const btnDecline = document.getElementById('cookie-decline');
+    const btnReopen  = document.getElementById('cookie-reopen');
+
+    let state = localStorage.getItem(LS_KEY);
+    console.log('[cookies] current state =', state);
+
+    // Helper to reset from console if needed
+    window.resetCookiesBanner = function(){
+      localStorage.removeItem(LS_KEY);
+      console.log('[cookies] reset. Forcing banner show.');
+      showBanner(true);
+    };
+
+    function showBanner(force=false){
+      // force -> ignore stored state (for testing)
+      if(force || !state){
+        banner.style.display = 'block';   // ensure node is displayed
+        requestAnimationFrame(()=> banner.classList.add('show'));
+        // auto-minimize if no decision in 10s (does NOT accept)
+        const autoMin = setTimeout(()=> minimize(), 10000);
+        ['click','keydown','touchstart'].forEach(ev=>{
+          banner.addEventListener(ev, ()=> clearTimeout(autoMin), {once:true});
+        });
+      } else if(state === 'dismissed'){
+        showPill();
+      }
+    }
+
+    function hideBanner(){
+      banner.classList.remove('show');
+      setTimeout(()=>{ banner.style.display='none'; }, 200);
+      pill.style.display='none';
+    }
+    function minimize(){
+      if(!localStorage.getItem(LS_KEY)){ localStorage.setItem(LS_KEY, 'dismissed'); }
+      banner.classList.remove('show');
+      setTimeout(()=>{ banner.style.display='none'; showPill(); }, 200);
+    }
+    function showPill(){ pill.style.display='flex'; }
+
+    // Button actions
+    btnAccept && btnAccept.addEventListener('click', ()=>{
+      localStorage.setItem(LS_KEY, 'accepted');
+      hideBanner();
+      // TODO: load non-essential scripts here (e.g., Google Analytics) after consent
+    });
+    btnDecline && btnDecline.addEventListener('click', ()=>{
+      localStorage.setItem(LS_KEY, 'declined');
+      hideBanner();
+    });
+    btnReopen && btnReopen.addEventListener('click', ()=>{
+      pill.style.display='none';
+      state = null;
+      showBanner(true);
+    });
+
+    // Initial display
+    showBanner();
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
 <body>
   <!-- Header minimal -->
   <header class="site-header">
