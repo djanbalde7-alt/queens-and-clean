@@ -271,7 +271,7 @@
 
 
 
-  <!-- Minimal Cookie Notice (FR) -->
+  <!-- Minimal Cookie Notice (FR, fiable) -->
 <style>
   #cookie-note{
     position: fixed; left: 50%; transform: translateX(-50%);
@@ -279,7 +279,7 @@
     background: #fff; color: #333; font-size: 13px; line-height: 1.5;
     border: 1px solid #e4e6ea; border-radius: 10px;
     box-shadow: 0 8px 24px rgba(0,0,0,.12);
-    padding: 12px 14px; z-index: 1000;
+    padding: 12px 14px; z-index: 9999;
     display: flex; gap: 10px; align-items: center; justify-content: space-between;
   }
   #cookie-note a{ color: inherit; text-decoration: underline; text-underline-offset: 3px; }
@@ -294,38 +294,47 @@
   }
 </style>
 
-<div id="cookie-note" role="status" aria-live="polite">
+<div id="cookie-note" role="status" aria-live="polite" hidden>
   <span>
-    En continuant d’utiliser ce site, vous acceptez les cookies.
-    <a href="/privacy.html">En savoir plus</a>.
+    By continuing to browse, you agree to our use of cookies to improve your experience.
+    <a href="/privacy.html">Learn more</a>.
   </span>
   <button id="cookie-note-close" aria-label="Fermer l’avis cookies">OK</button>
 </div>
 
 <script>
-(function () {
-  const KEY = 'cookie-note-v2';               // <-- nouvelle clé pour éviter l’ancienne
-  const note = document.getElementById('cookie-note');
-  const closeBtn = document.getElementById('cookie-note-close');
+document.addEventListener('DOMContentLoaded', function () {
+  try {
+    const KEY = 'cookie-note-v3'; // nouvelle clé
+    const note = document.getElementById('cookie-note');
+    const closeBtn = document.getElementById('cookie-note-close');
 
-  // Si déjà accepté, on masque immédiatement
-  if (localStorage.getItem(KEY) === '1') {
-    note.style.display = 'none';
-    return;
+    if (!note || !closeBtn) return; // sécurité
+
+    // Si déjà accepté : ne rien afficher
+    if (localStorage.getItem(KEY) === '1') return;
+
+    // Afficher (l’attribut hidden évite un flash si JS tarde)
+    note.hidden = false;
+
+    // Auto-hide après 10s
+    const tidy = setTimeout(() => {
+      note.hidden = true;
+      localStorage.setItem(KEY, '1');
+    }, 10000);
+
+    // Clic utilisateur
+    closeBtn.addEventListener('click', () => {
+      clearTimeout(tidy);
+      note.hidden = true;
+      localStorage.setItem(KEY, '1');
+    });
+  } catch (e) {
+    // en cas de blocage localStorage, on masque pour ne pas gêner l’UX
+    const n = document.getElementById('cookie-note');
+    if (n) n.hidden = true;
   }
-
-  // Auto-fermeture après 10s + mémorisation
-  setTimeout(() => {
-    note.style.display = 'none';
-    localStorage.setItem(KEY, '1');
-  }, 10000);
-
-  // Clic sur OK
-  closeBtn.addEventListener('click', () => {
-    localStorage.setItem(KEY, '1');
-    note.style.display = 'none';
-  });
-})();
+});
 </script>
 
 
