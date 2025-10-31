@@ -271,70 +271,78 @@
 
 
 
-  <!-- Minimal Cookie Notice (FR, fiable) -->
+  <!-- ✅ Minimal Cookie Banner (English + Auto-hide after 10s + Click close) -->
 <style>
-  #cookie-note{
-    position: fixed; left: 50%; transform: translateX(-50%);
-    bottom: 12px; width: calc(100% - 32px); max-width: 720px;
-    background: #fff; color: #333; font-size: 13px; line-height: 1.5;
-    border: 1px solid #e4e6ea; border-radius: 10px;
-    box-shadow: 0 8px 24px rgba(0,0,0,.12);
-    padding: 12px 14px; z-index: 9999;
-    display: flex; gap: 10px; align-items: center; justify-content: space-between;
+  #cookie-banner {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 32px);
+    max-width: 480px;
+    background: #fff;
+    color: #222;
+    font-size: 13px;
+    line-height: 1.5;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 12px 14px;
+    text-align: center;
+    z-index: 9999;
+    display: none;
   }
-  #cookie-note a{ color: inherit; text-decoration: underline; text-underline-offset: 3px; }
-  #cookie-note button{
-    appearance: none; border: none; background: transparent; cursor: pointer;
-    padding: 6px 10px; border-radius: 6px; font-weight: 600;
+
+  #cookie-banner a {
+    color: #0066cc;
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
-  #cookie-note button:hover{ background:#f5f5f5; }
-  @media (max-width: 380px){
-    #cookie-note{ flex-direction: column; align-items: stretch; gap: 8px; }
-    #cookie-note button{ align-self: flex-end; }
+
+  #cookie-banner button {
+    background: transparent;
+    border: none;
+    color: #0066cc;
+    font-weight: 600;
+    margin-left: 6px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  #cookie-banner button:hover {
+    text-decoration: underline;
   }
 </style>
 
-<div id="cookie-note" role="status" aria-live="polite" hidden>
-  <span>
-    By continuing to browse, you agree to our use of cookies to improve your experience.
-    <a href="/privacy.html">Learn more</a>.
-  </span>
-  <button id="cookie-note-close" aria-label="Fermer l’avis cookies">OK</button>
+<div id="cookie-banner" role="status" aria-live="polite">
+  By continuing to browse, you agree to our use of cookies to improve your experience.
+  <a href="/privacy.html">Learn more</a>.
+  <button id="cookie-ok">OK</button>
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  try {
-    const KEY = 'cookie-note-v3'; // nouvelle clé
-    const note = document.getElementById('cookie-note');
-    const closeBtn = document.getElementById('cookie-note-close');
+  (function() {
+    const banner = document.getElementById("cookie-banner");
+    const btn = document.getElementById("cookie-ok");
+    const KEY = "cookies-accepted";
 
-    if (!note || !closeBtn) return; // sécurité
+    // Check if cookies already accepted
+    if (!localStorage.getItem(KEY)) {
+      banner.style.display = "block";
 
-    // Si déjà accepté : ne rien afficher
-    if (localStorage.getItem(KEY) === '1') return;
+      // Auto-hide after 10 seconds
+      setTimeout(() => {
+        banner.style.display = "none";
+        localStorage.setItem(KEY, "true");
+      }, 10000);
 
-    // Afficher (l’attribut hidden évite un flash si JS tarde)
-    note.hidden = false;
-
-    // Auto-hide après 10s
-    const tidy = setTimeout(() => {
-      note.hidden = true;
-      localStorage.setItem(KEY, '1');
-    }, 10000);
-
-    // Clic utilisateur
-    closeBtn.addEventListener('click', () => {
-      clearTimeout(tidy);
-      note.hidden = true;
-      localStorage.setItem(KEY, '1');
-    });
-  } catch (e) {
-    // en cas de blocage localStorage, on masque pour ne pas gêner l’UX
-    const n = document.getElementById('cookie-note');
-    if (n) n.hidden = true;
-  }
-});
+      // Hide when clicking OK
+      btn.addEventListener("click", () => {
+        banner.style.display = "none";
+        localStorage.setItem(KEY, "true");
+      });
+    }
+  })();
 </script>
 
 
