@@ -250,3 +250,25 @@ select:invalid, option[value=""]{ color: var(--muted); }
   -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8.5 6.5 12 13 4"/></svg>') center / contain no-repeat;
   mask:         url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8.5 6.5 12 13 4"/></svg>') center / contain no-repeat;
 }
+
+
+.site-footer{
+  background: var(--brand-blue);
+  color: rgba(255,255,255,.85);
+  padding: var(--space-6) 0;
+}
+
+.site-footer .container{
+  text-align: center;
+}
+
+.site-footer a.footer-link{
+  color: rgba(255,255,255,.95);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.site-footer a.footer-link:focus,
+.site-footer a.footer-link:hover{
+  text-decoration-thickness: 2px;
+}
