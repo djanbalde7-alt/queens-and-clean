@@ -55,67 +55,79 @@ form?.addEventListener('submit', async (e) => {
 
 
 
-
-// ===== Meta Pixel helpers (safe) =====
-const fbqSafe = (...args) => {
-  if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-    window.fbq(...args);
-  } else {
-    // console.debug('[fbq skipped]', args);
-  }
-};
-
-// ===== 1) ViewContent: quand le HERO est visible à 50% =====
-(() => {
-  const hero = document.getElementById('hero');
-  if (!hero || !('IntersectionObserver' in window)) return;
-
-  let fired = false;
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!fired && entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-        fired = true;
-        fbqSafe('track', 'ViewContent', {
-          content_name: 'landing_hero',
-          content_category: 'landing',
-        });
-        io.disconnect();
-      }
-    });
-  }, { threshold: 0.5 });
-
-  io.observe(hero);
-})();
-
-// ===== 2) ClickButton: sur tous les CTAs d’ancrage =====
-(() => {
-  document.querySelectorAll('a.btn.cta[data-cta]').forEach((el) => {
-    el.addEventListener('click', () => {
-      const source = el.getAttribute('data-cta') || 'unknown';
-      fbqSafe('trackCustom', 'ClickButton', {
-        cta_source: source,
-        href: el.getAttribute('href') || '',
-      });
-    }, { passive: true });
-  });
-})();
-
-// ===== 3) StartForm: premier focus dans le formulaire =====
-(() => {
-  const form = document.getElementById('quote-form');
-  if (!form) return;
-
-  let started = false;
-  const onStart = (e) => {
-    if (started) return;
-    if (!form.contains(e.target)) return;
-    started = true;
-    fbqSafe('trackCustom', 'StartForm', {
-      form_id: 'quote-form',
-    });
-    // on peut retirer l’écouteur après le premier focus
-    document.removeEventListener('focusin', onStart);
+document.addEventListener('DOMContentLoaded', () => {
+  // Sécurité d'appel fbq
+  const fbqSafe = (...args) => {
+    if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+      window.fbq(...args);
+    } else {
+      console.debug('[fbq skipped]', args);
+    }
   };
 
-  document.addEventListener('focusin', onStart);
-})();
+  // --- 1) ViewContent quand le HERO est visible à 50%
+  (function trackViewContent() {
+    const hero = document.getElementById('hero');
+    if (!hero) {
+      console.warn('[meta] #hero introuvable -> ViewContent non armé');
+      return;
+    }
+    if (!('IntersectionObserver' in window)) {
+      console.warn('[meta] IntersectionObserver indisponible');
+      return;
+    }
+
+    let fired = false;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!fired && entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+          fired = true;
+          console.log('[meta] ViewContent -> landing_hero');
+          fbqSafe('track', 'ViewContent', {
+            content_name: 'landing_hero',
+            content_category: 'landing',
+          });
+          io.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    io.observe(hero);
+  })();
+
+  // --- 2) ClickButton sur tous les CTAs (liens ET boutons)
+  (function trackClickButton() {
+    const ctas = document.querySelectorAll('a.btn.cta[data-cta], button.btn.cta');
+    if (!ctas.length) {
+      console.warn('[meta] aucun CTA trouvé');
+      return;
+    }
+    ctas.forEach((el) => {
+      el.addEventListener('click', () => {
+        const source = el.getAttribute('data-cta') || (el.tagName === 'BUTTON' ? 'form_button' : 'unknown');
+        const href = el.getAttribute && el.getAttribute('href') ? el.getAttribute('href') : '';
+        console.log('[meta] ClickButton ->', { source, href });
+        fbqSafe('trackCustom', 'ClickButton', { cta_source: source, href });
+      }, { passive: true });
+    });
+  })();
+
+  // --- 3) StartForm au premier focus dans le formulaire
+  (function trackStartForm() {
+    const form = document.getElementById('quote-form');
+    if (!form) {
+      console.warn('[meta] #quote-form introuvable');
+      return;
+    }
+    let started = false;
+    const onStart = (e) => {
+      if (started) return;
+      if (!form.contains(e.target)) return;
+      started = true;
+      console.log('[meta] StartForm -> quote-form');
+      fbqSafe('trackCustom', 'StartForm', { form_id: 'quote-form' });
+      document.removeEventListener('focusin', onStart);
+    };
+    document.addEventListener('focusin', onStart);
+  })();
+});
