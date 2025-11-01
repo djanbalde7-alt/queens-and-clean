@@ -8,6 +8,28 @@
   <link rel="stylesheet" href="/assets/css/base.css" />
   <link rel="stylesheet" href="/assets/css/layout.css" />
   <link rel="stylesheet" href="/assets/css/components.css" />
+
+
+
+   <!-- Meta Pixel (Queens & Clean) -->
+  <script>
+    !(function(f,b,e,v,n,t,s){
+      if(f.fbq) return;
+      n=f.fbq=function(){ n.callMethod ? n.callMethod.apply(n,arguments) : n.queue.push(arguments) };
+      if(!f._fbq) f._fbq=n; n.push=n; n.loaded=!0; n.version='2.0';
+      n.queue=[]; t=b.createElement(e); t.async=!0; t.src=v;
+      s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s);
+    })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', '817390677501879');     // <-- remplace par ton ID pixel
+    fbq('track', 'PageView');              // 1) PageView
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+         src="https://www.facebook.com/tr?id=817390677501879&ev=PageView&noscript=1" />
+  </noscript>
+
+
 </head>
 
 <body>
@@ -33,7 +55,7 @@
         <li>Produits eco-friendly</li>
       </ul>
       <div class="cta-wrapper">
-        <a class="btn cta" href="#lead-form">Get A Quote In 45s</a>
+        <a class="btn cta" href="#lead-form" data-cta="hero">Get A Quote In 45s</a>
       </div>
 
       <div class="hero-image">
@@ -69,7 +91,7 @@
         </div>
       </div>
       <div class="cta-wrapper">
-        <a class="btn cta" href="#lead-form">Get A Quote In 45s</a>
+        <a class="btn cta" href="#lead-form" data-cta="benefit">Get A Quote In 45s</a>
       </div>
     </div>
   </section>
@@ -185,7 +207,7 @@
         <div class="row"><div>Extras</div><div>$20-30</div><div>Four, frigo, etc.</div></div>
       </div>
       <div class="cta-wrapper">
-        <a class="btn cta" href="#lead-form">Get A Quote In 45s</a>
+        <a class="btn cta" href="#lead-form" data-cta="pricing">Get A Quote In 45s</a>
       </div>
     </div>
   </section>
@@ -250,7 +272,7 @@
 
     <!-- CTA vers le formulaire -->
     <div class="cta-wrapper">
-      <a href="#quote-form" class="btn cta">Get A Quote In 45s</a>
+      <a href="#quote-form" class="btn cta" data-cta="testimonials">Get A Quote In 45s</a>
     </div>
   </div>
 </section>
