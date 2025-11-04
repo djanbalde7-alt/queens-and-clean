@@ -341,3 +341,49 @@ select:invalid, option[value=""]{ color: var(--muted); }
 
 
 
+/* ----- Pricing section ----- */
+.pricing .ticks { margin: 8px 0 16px; padding-left: 20px; }
+.pricing .ticks li { margin: 6px 0; }
+
+.pricing-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.pricing-card .row {
+  display: grid;
+  grid-template-columns: 1fr auto 1.3fr;
+  gap: 12px;
+  padding: 14px 16px;
+  border-top: 1px solid #f0f2f5;
+}
+.pricing-card .row.head {
+  background: #f7f8fa;
+  font-weight: 700;
+  border-top: 0;
+}
+.pricing-card .cell.label { font-weight: 600; }
+.pricing-card .cell.price { font-weight: 700; white-space: nowrap; }
+.pricing-card .cell.desc { color: #111; }
+.pricing-card .cell.desc .hint {
+  display: block; margin-top: 6px; font-size: 13px; color: #6b7280;
+}
+
+/* Mobile stack */
+@media (max-width: 480px) {
+  .pricing-card .row,
+  .pricing-card .row.head {
+    grid-template-columns: 1fr;
+  }
+  .pricing-card .row.head { display: none; } /* plus lisible en mobile */
+  .pricing-card .cell.price { font-size: 16px; }
+  .pricing-card .cell.label { font-size: 16px; }
+}
+
+.pricing .microcopy {
+  margin: 12px 2px 8px;
+  font-size: 13.5px;
+  color: #6b7280;
+}
