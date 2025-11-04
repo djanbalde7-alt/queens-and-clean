@@ -333,3 +333,105 @@ select:invalid, option[value=""]{ color: var(--muted); }
     box-shadow: 0 2px 0 rgba(17,17,17,.06), 0 14px 30px rgba(17,17,17,.10);
   }
 }
+
+
+
+
+
+
+
+
+/* =========================
+   Queens & Clean — Form v2
+   ========================= */
+
+/* Layout & rhythm */
+.form { max-width: 720px; margin: 0 auto; }
+.form label { display:block; margin:14px 0 6px; font:600 15px/1.3 Inter, system-ui, -apple-system, Segoe UI, Arial, sans-serif; color:#0A2342;}
+.form input,
+.form select,
+.form textarea {
+  display:block; width:100%;
+  padding:14px 14px;
+  border:1px solid #E4E7EC; border-radius:10px;
+  background:#fff; color:#111; font:500 16px/1.25 Inter, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+  outline:none; transition:border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+
+/* Placeholders lisibles mais discrets */
+.form ::placeholder{ color:#9AA3AF; }
+
+/* Focus state: rassurant sans agressivité */
+.form input:focus,
+.form select:focus,
+.form textarea:focus{
+  border-color:#0A2342;
+  box-shadow:0 0 0 3px rgba(10,35,66,0.12);
+}
+
+/* Success (champ rempli) */
+.form input:valid,
+.form select:valid,
+.form textarea:valid{
+  border-color:#16A34A;
+}
+
+/* Erreur basique (HTML5) */
+.form input:invalid[required],
+.form select:invalid[required]{
+  border-color:#EF4444;
+}
+
+/* Espacement vertical entre champs */
+.form input + label,
+.form select + label,
+.form textarea + label{ margin-top:18px; }
+
+/* Bouton CTA */
+.btn.cta{
+  width:100%;
+  display:inline-block; text-align:center;
+  padding:16px 18px; margin-top:16px;
+  border:0; border-radius:12px; cursor:pointer;
+  background:#FF8A38; color:#111; font:800 18px/1 Inter, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+  box-shadow:0 6px 18px rgba(255,138,56,0.35);
+  transition:transform .06s ease, filter .15s ease, box-shadow .15s ease;
+}
+.btn.cta:hover{ filter:brightness(0.98); box-shadow:0 8px 22px rgba(255,138,56,0.42); }
+.btn.cta:active{ transform:translateY(1px); }
+
+/* Micro-copy sous le CTA */
+.form-note{
+  margin:10px 4px 0; text-align:center;
+  font:500 13px/1.4 Inter, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+  color:#4B5563;
+}
+
+/* Bloc trust */
+.trust-box{
+  margin:18px auto 0; padding:12px 14px;
+  max-width:720px; border-radius:12px;
+  background:#F6F7F9; color:#0A2342;
+  font:600 13px/1.45 Inter, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+  box-shadow:inset 0 0 0 1px #E7EBF0;
+}
+.trust-box p{ margin:6px 0; }
+
+/* Section title respiration */
+.section-title{
+  margin:0 0 14px;
+  font:800 28px/1.1 Inter, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+  letter-spacing:-0.2px; color:#0A2342;
+}
+
+/* Petits écrans par défaut; affine sur >480px */
+@media (min-width: 480px){
+  .section-title{ font-size:30px; }
+  .btn.cta{ font-size:19px; }
+}
+
+/* Accessibilité focus visible au clavier */
+:focus-visible{
+  outline: 3px solid rgba(10,35,66,0.35);
+  outline-offset: 2px;
+}
