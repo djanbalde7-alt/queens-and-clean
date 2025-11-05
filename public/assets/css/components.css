@@ -523,89 +523,48 @@ select:invalid, option[value=""]{ color: var(--muted); }
 
 
 
-/* =========================================
-   BENEFITS SECTION ALIGNMENT WITH CTA
-   ========================================= */
-
-.section.alt .container {
-  max-width: 480px;             /* même largeur que ton CTA */
-  margin: 0 auto;               /* centre horizontalement */
-  padding: 0 16px;              /* marges latérales douces */
+/* ====== Normalize container & CTA width ====== */
+.container{
+  max-width: 680px;          /* même largeur de référence partout */
+  margin: 0 auto;
+  padding-inline: 16px;
 }
 
-/* Chaque carte benefit */
-.benefit {
-  width: 100%;                  /* s’aligne sur la largeur du conteneur */
-  box-sizing: border-box;
-  margin-bottom: 20px;
-  border-radius: 12px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+/* Le bouton CTA prend toute la largeur du container */
+.btn.cta{
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+/* ====== Benefits: mêmes bords que le CTA ====== */
+.benefits-grid{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Chaque carte occupe 100% de la largeur du container */
+.benefits-grid > .benefit{
+  width: 100% !important;     /* override au cas où un max-width traîne */
+  margin: 16px 0;             /* pas de marge latérale pour garder l’alignement */
   padding: 20px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(0,0,0,.06);
 }
 
-/* Légère élévation au survol (premium UX) */
-.benefit:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-}
+/* Titre & texte internes (optionnel, pour homogénéiser) */
+.benefit__title{ margin: 0 0 8px; font-weight: 800; }
+.benefit__text{ margin: 0; }
 
-/* Icône */
-.benefit_icon {
-  display: flex;
+/* Icône à gauche (si présent) */
+.benefit_icon{
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  background: #f5f7fa;
-  margin-bottom: 16px;
-}
-
-/* Titre */
-.benefit_title {
-  font-weight: 700;
-  color: #0A2342;               /* bleu profond Queens & Clean */
-  font-size: 18px;
-  margin-bottom: 6px;
-}
-
-/* Texte */
-.benefit_text {
-  color: #111111;
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-/* CTA aligné avec les cartes */
-.cta-wrapper {
-  max-width: 480px;
-  margin: 24px auto 0;
-}
-
-/* ---- TABLETTE ---- */
-@media (min-width: 768px) {
-  .section.alt .container,
-  .cta-wrapper {
-    max-width: 600px;           /* élargissement harmonieux */
-  }
-}
-
-/* ---- DESKTOP (préparation future sans casser mobile) ---- */
-@media (min-width: 1024px) {
-  .benefits-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-
-  .benefit {
-    margin-bottom: 0;           /* on enlève le margin vertical */
-  }
-
-  .cta-wrapper {
-    max-width: 600px;
-    margin-top: 40px;
-  }
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: #eef2f4;
+  margin-right: 12px;
 }
