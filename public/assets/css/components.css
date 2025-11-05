@@ -453,3 +453,16 @@ select:invalid, option[value=""]{ color: var(--muted); }
 @media (max-width: 600px) {
   .reviews .review { flex-direction: column; align-items: flex-start; }
 }
+
+
+.reviews .stars {
+  color: #FFB400;
+  font-size: 15px;
+  margin: 4px 0 6px;
+  letter-spacing: 1px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.reviews .stars:hover {
+  color: #FFA500;
+  transform: scale(1.05);
+}
