@@ -466,3 +466,31 @@ select:invalid, option[value=""]{ color: var(--muted); }
   color: #FFA500;
   transform: scale(1.05);
 }
+
+
+/* ---- HERO LIST STYLING ---- */
+.proofs {
+  margin: 16px 0 24px;
+  padding-left: 22px;        /* décalage à gauche pour bien positionner les points */
+  list-style: disc;          /* affiche les puces rondes classiques */
+}
+
+.proofs li {
+  margin: 10px 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #0A2342;            /* ton bleu profond principal */
+}
+
+/* Version responsive : un peu plus grande sur tablette */
+@media (min-width: 768px) {
+  .proofs li {
+    font-size: 18px;
+  }
+}
+
+/* Supprime toute ancienne icône check s’il y en avait */
+.proofs li::before {
+  content: none !important;
+}
+
