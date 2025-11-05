@@ -456,7 +456,7 @@ select:invalid, option[value=""]{ color: var(--muted); }
 
 
 .reviews .stars {
-  color: #FFB400;
+  color: #FFB400 !important;
   font-size: 15px;
   margin: 4px 0 6px;
   letter-spacing: 1px;
