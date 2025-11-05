@@ -494,3 +494,30 @@ select:invalid, option[value=""]{ color: var(--muted); }
   content: none !important;
 }
 
+
+
+
+/* HERO bullets */
+.hero .proofs {
+  display: block !important;              /* au cas où un flex/grid est appliqué */
+  list-style: disc !important;            /* force les puces */
+  list-style-position: outside;
+  margin: 16px 0 24px;
+  padding-left: 22px;                     /* espace pour la puce */
+}
+
+.hero .proofs li {
+  display: list-item !important;          /* redevient un item de liste */
+  margin: 10px 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #0A2342;
+}
+
+@media (min-width: 768px) {
+  .hero .proofs li { font-size: 18px; }
+}
+
+
+.hero ul.proofs { list-style: disc !important; padding-left: 22px !important; }
+
