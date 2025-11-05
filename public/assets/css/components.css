@@ -521,3 +521,65 @@ select:invalid, option[value=""]{ color: var(--muted); }
 
 .hero ul.proofs { list-style: disc !important; padding-left: 22px !important; }
 
+
+
+/* ---- BENEFITS SECTION WIDTH ALIGNMENT ---- */
+.section.alt .container {
+  max-width: 480px;               /* même largeur que ton CTA sur mobile */
+  margin: 0 auto;                 /* centre le bloc */
+  padding: 0 16px;                /* espace latéral doux */
+}
+
+/* Chaque carte */
+.benefit {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  padding: 24px 20px;
+  margin-bottom: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover subtil pour UX premium */
+.benefit:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+/* Icône */
+.benefit-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #F5F7FA;
+  margin-bottom: 16px;
+}
+
+/* Texte */
+.benefit h3 {
+  font-weight: 700;
+  color: #0A2342;                /* ton bleu signature */
+  margin-bottom: 8px;
+}
+
+.benefit p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #111111;
+}
+
+/* CTA aligné à la même largeur */
+.cta-wrapper {
+  max-width: 480px;
+  margin: 24px auto 0;
+}
+
+@media (min-width: 768px) {
+  .section.alt .container,
+  .cta-wrapper {
+    max-width: 600px;            /* largeur unifiée tablette */
+  }
+}
